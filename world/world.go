@@ -22,10 +22,14 @@ func NewWorld(
 ) *World {
 
 	// Create the world struct
+	tileMap := make([][]tiles.Tile, dims.Y)
+	for i := range dims.Y {
+		tileMap[i] = make([]tiles.Tile, dims.X)
+	}
 	env := &World{
 		random: random,
 
-		tiles: make([][]tiles.Tile, dims.X, dims.Y),
+		tiles: tileMap,
 	}
 
 	return env

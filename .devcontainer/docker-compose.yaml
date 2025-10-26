@@ -7,9 +7,11 @@ services:
         volumes:
             - ..:/workspaces/go-city:cached
             - /dev:/dev:rw
-            - ${HOME}/.Xauthority:/home/vscode/.Xauthority:rw
+            - ${XAUTHORITY:-${HOME}/.Xauthority}:/tmp/.Xauthority
         environment:
             DISPLAY: ${DISPLAY}
+            XAUTHORITY: /tmp/.Xauthority
+        ipc: host
         network_mode: "host"
         privileged: true
         cap_add:
