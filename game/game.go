@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/SimNine/go-city/simulation"
+	"github.com/SimNine/go-city/world/tiles"
 	"github.com/SimNine/go-urfutils/src/geom"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -43,6 +44,8 @@ type Game struct {
 }
 
 func (g *Game) Init() {
+	tiles.InitTileImages()
+
 	ebiten.SetWindowTitle("GeneTrees")
 	ebiten.SetWindowSize(g.windowSize.X, g.windowSize.Y)
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
