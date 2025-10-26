@@ -26,7 +26,7 @@ func NewGame(dims geom.Dims[int]) *Game {
 
 		// Game
 		simulation: simulation.NewSimulation(
-			geom.Dims[int]{X: 3000, Y: 2000},
+			geom.Dims[int]{X: 200, Y: 200},
 		),
 	}
 }

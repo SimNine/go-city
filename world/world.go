@@ -6,6 +6,7 @@ import (
 
 	"github.com/SimNine/go-city/world/tiles"
 	"github.com/SimNine/go-urfutils/src/geom"
+	"github.com/SimNine/go-urfutils/src/gfx"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -29,7 +30,8 @@ func NewWorld(
 	env := &World{
 		random: random,
 
-		tiles: tileMap,
+		tiles:          tileMap,
+		defaultTileImg: gfx.EbitenCreateHollowRectangleImage(geom.Dims[int]{5, 5}, color.RGBA{255, 0, 0, 255}),
 	}
 
 	return env
@@ -38,17 +40,27 @@ func NewWorld(
 type World struct {
 	random *rand.Rand
 
-	tiles [][]tiles.Tile
+	tiles          [][]tiles.Tile
+	defaultTileImg *ebiten.Image
 }
 
-func (e *World) Draw(
+func (w *World) Draw(
 	screen *ebiten.Image,
 	viewport geom.Viewport[int],
 ) {
 	// Fill the background with blue
 	screen.Fill(COLOR_SKYBLUE)
+
+	// For each tile, draw it
+	for row := range w.tiles {
+		for col := range w.tiles[row] {
+			imgOpts := &ebiten.DrawImageOptions{}
+			imgOpts.GeoM.Translate(float64(col*6-viewport.Pos.X), float64(row*6-viewport.Pos.Y))
+			screen.DrawImage(w.defaultTileImg, imgOpts)
+		}
+	}
 }
 
-func (e *World) Update() {
+func (w *World) Update() {
 	// do nothing for now
 }
