@@ -11,6 +11,7 @@ const (
 	GRASS TileType = iota
 	WATER
 	SAND
+	ROAD
 )
 
 var tileImages map[TileType]*ebiten.Image
@@ -29,4 +30,5 @@ func InitTileImages() {
 	initSingleTileImage(GRASS, "assets/tiles/grass.png")
 	initSingleTileImage(WATER, "assets/tiles/water.png")
 	initSingleTileImage(SAND, "assets/tiles/sand.png")
+	initSingleTileImage(ROAD, "assets/tiles/bedrock.png")
 }

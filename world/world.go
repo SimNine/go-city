@@ -28,18 +28,25 @@ func NewWorld(
 	dims geom.Dims[int],
 ) *World {
 
-	// Create the world struct
+	// Create the world struct with default tiles
 	tileMap := make([][]tiles.Tile, dims.Y)
 	for i := range dims.Y {
 		tileMap[i] = make([]tiles.Tile, dims.X)
 		for j := range dims.X {
-			tileMap[i][j] = tiles.Tile{T: tiles.WATER}
+			tileMap[i][j] = tiles.Tile{T: tiles.GRASS}
 		}
 	}
 	env := &World{
 		random: random,
 
 		tiles: tileMap,
+	}
+
+	// Generate roads on the world
+	for j := 0; j < len(env.tiles); j += 10 {
+		for i := 0; i < len(env.tiles[j]); i++ {
+			env.tiles[j][i] = tiles.Tile{T: tiles.ROAD}
+		}
 	}
 
 	return env
@@ -63,7 +70,7 @@ func (w *World) Draw(
 		for col := range w.tiles[row] {
 			image := w.tiles[row][col].GetImage()
 			imgOpts := &ebiten.DrawImageOptions{}
-			imgOpts.GeoM.Translate(float64(col*(image.Bounds().Dx()+2)-viewport.Pos.X), float64(row*(image.Bounds().Dy()+2)-viewport.Pos.Y))
+			imgOpts.GeoM.Translate(float64(col*image.Bounds().Dx()-viewport.Pos.X), float64(row*image.Bounds().Dy()-viewport.Pos.Y))
 			screen.DrawImage(image, imgOpts)
 		}
 	}
